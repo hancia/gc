@@ -1,0 +1,3 @@
+C:/Users/m81u/gc/cmake-build-debug/CMakeFiles/gc.dir
+C:/Users/m81u/gc/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/m81u/gc/cmake-build-debug/CMakeFiles/rebuild_cache.dir
