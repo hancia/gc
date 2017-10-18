@@ -14,7 +14,7 @@ public:
     }
 };
 
-void print(verticle T[], int n)
+void print(verticle T[], int n)  //wyswietla graf
 {
     for(int i=0; i<n; i++)
     {
@@ -27,22 +27,22 @@ void print(verticle T[], int n)
     }
 }
 
-int greedy(verticle T[], int n)
+int greedy(verticle T[], int n) //algorytm zachlanny
 {
     bool colors[n];
     for(int i=0; i<n; i++)
     {
-        for(int a=0; a<n; a++)
+        for(int a=0; a<n; a++) //zeruje tablice dostepnych kolorow
             colors[a]=false;
 
-        if(T[i].color==-1)
+        if(T[i].color==-1) //jezeli wierzcholek nie ma jeszcze koloru
         {
-            for(auto it = T[i].neighbour.begin();it!=T[i].neighbour.end();it++)
+            for(auto it = T[i].neighbour.begin();it!=T[i].neighbour.end();it++) //przechodzi po sasiadach wierzcholka
             {
-                if((*it)->color!=(-1)) colors[(*it)->color]=true;
+                if((*it)->color!=(-1)) colors[(*it)->color]=true; //jezeli wierzcholek jest pokolorowany, zaznacz to w tablicy kolorow
             }
             for(int a=0; a<n; a++)
-                if(colors[a]==false)
+                if(colors[a]==false) //szuka dostepnych kolorow
                 {
                     T[i].color = a;
                     break;
@@ -51,11 +51,11 @@ int greedy(verticle T[], int n)
     }
 
     int max=T[0].color;
-    for(int a=1; a<n; a++)
+    for(int a=1; a<n; a++) //sprawdza, ile kolorow jest uzytych
     {
         if(T[a].color>max) max=T[a].color;
     }
-    return max+1;
+    return max+1; //+1 bo kolory sa numerowane od 0
 }
 
 int main() {
@@ -68,7 +68,7 @@ int main() {
     {
         T[i].set_id(i);
     }
-    while(!dane.eof())
+    while(!dane.eof()) //tworzy graf
     {
         dane >> a >> b;
         T[a-1].neighbour.push_back(&T[b-1]);
