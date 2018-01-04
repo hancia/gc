@@ -6,11 +6,15 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/m81u/gc/main.cpp
+C:/Users/Hania/Desktop/studia/gc-master/main.cpp
 iostream
 -
 fstream
 -
 list
+-
+cstdlib
+-
+ctime
 -
 
