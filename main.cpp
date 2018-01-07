@@ -158,26 +158,27 @@ void mutation1(chromosome &child, verticle T[], int n, int wynik)
     for(int i=0; i<n; i++)
     {
         for(int j=0; j<n; j++) ValidColours[j]=0;
-        for(auto it:T[i].neighbour) ValidColours[it->v]=1;
+        for(auto it:T[i].neighbour) ValidColours[child.colours[it->v]]=1;
         for(auto it: T[i].neighbour)
             if(child.colours[i]==child.colours[it->v])
             {
                 int x;
                 do{
                     x=rand()%wynik;
+                    Sleep(500);
                 }while(ValidColours[x]!=0);
                 child.colours[i]=x;
             }
     }
 }
-void mutation2(chromosome &child, verticle T[], int n)
+void mutation2(chromosome &child, verticle T[], int n,int wynik)
 {
     for(int i=0; i<n; i++)
     {
         for(auto it: T[i].neighbour)
             if(child.colours[i]==child.colours[it->v])
             {
-                child.colours[i]=rand()%n;
+                child.colours[i]=rand()%wynik;
             }
     }
 }
@@ -232,7 +233,7 @@ void print_pop(chromosome population[], int n){
             cout<<population[i].colours[j]<<" ";
         cout<<endl;
     }
-    Sleep(500);
+    Sleep(1000);
 }
 int genetic(verticle T[], int n, int wynik)
 {
@@ -251,6 +252,9 @@ int genetic(verticle T[], int n, int wynik)
     {
         generate_chromosomes(n,(PopulationNumber/2),population,wynik);
 
+        //print_pop(population,n);
+        //cout<<endl;
+
         count_fitness(n,population,T);
         counting_factor(population,n);
         quicksort(population,0,PopulationNumber-1);
@@ -258,9 +262,9 @@ int genetic(verticle T[], int n, int wynik)
         for(int i=0; i<PopulationNumber; i++){
             chromosome child;
             child.colours=new int [n];
-            parent_selection1(parent1,parent2,population);
-            crossover(n,parent1,parent2,child);
-            mutation1(child,T,n,wynik);
+            parent_selection1(parent1, parent2, population);
+            crossover(n, parent1, parent2, child);
+            mutation1(child,T, n, wynik);
             pop[i]=child;
         }
         for(int i=0; i<PopulationNumber; i++)
@@ -272,8 +276,9 @@ int genetic(verticle T[], int n, int wynik)
         quicksort(population,0,PopulationNumber-1);
         //print_pop(population,n);
         count++;
+        if(count%1000==0)cout<<"Koniec pokolenia"<<endl;
     }
-    while(count!=10000);
+    while(count!=20000);
     if(population[0].fitness!=0) wisdomofArtificialCrowds(population[0],n,T);
     int result=counting_colours(n,population[0]);
     return result;
@@ -282,7 +287,7 @@ int genetic(verticle T[], int n, int wynik)
 int main() {
     srand(time(NULL));
     ifstream dane;
-    dane.open("gc500.txt");
+    dane.open("queen6.txt");
     int n,a,b;
     dane>>n;
     verticle T[n];
